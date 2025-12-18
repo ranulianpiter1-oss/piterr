@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Letter</title>
+    <!-- Sisipkan Tailwind, Fonts, dan Custom Style yang sama -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400&family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* ... (sama seperti di index.html) ... */
+        :root { --color-base: #F5F3F0; --color-text: #2C2C2C; --color-accent: #A67C52; }
+        body { background-color: var(--color-base); color: var(--color-text); font-family: 'Inter', sans-serif; }
+        .font-heading { font-family: 'Cormorant Garamond', serif; }
+        .font-cursive { font-family: 'Dancing Script', cursive; }
+        .text-accent { color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+        @media (prefers-color-scheme: dark) { :root { --color-base: #1A1A1A; --color-text: #E8E5E1; } }
+
+        /* Form Styles */
+        .password-form, .letter-content {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .password-form.hidden, .letter-content.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            position: absolute;
+        }
+        .letter-content {
+            display: none; /* Sembunyikan secara default */
+        }
+        .letter-content.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+            position: relative;
+        }
+        textarea {
+            background-color: var(--color-base);
+            color: var(--color-text);
+            border: 1px solid var(--color-text);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center px-4 py-8">
+
+    <!-- Password Form -->
+    <div id="passwordForm" class="password-form w-full max-w-md">
+        <h1 class="font-heading text-3xl font-bold text-center mb-6">Sebuah Pesan Pribadi</h1>
+        <p class="text-center mb-8 text-sm">Halaman ini hanya untukmu. Masukkan tanggal anniversary kita (DDMMYYYY) untuk melanjutkan.</p>
+        
+        <form id="otpForm" class="flex flex-col space-y-4">
+            <input type="password" id="otpInput" maxlength="8" placeholder="DDMMYYYY" 
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-center text-lg tracking-widest" required>
+            <button type="submit" class="w-full bg-accent text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition-opacity">
+                Buka Surat
+            </button>
+        </form>
+        <p id="errorMessage" class="text-red-500 text-center mt-4 hidden">Kode salah, coba lagi ya.</p>
+    </div>
+
+    <!-- Letter Content (Sembunyikan dulu) -->
+    <div id="letterContent" class="letter-content hidden w-full max-w-4xl">
+        <h1 class="font-heading text-4xl md:text-5xl font-bold text-center mb-12">Untuk [Nama TTM],</h1>
+        
+        <div class="prose prose-lg max-w-none bg-white p-8 rounded-lg shadow-lg">
+            <p>
+                <!-- ISI SURAT PANJANG ANDA DI SINI (MINIMAL 300 KATA) -->
+                [Nama TTM], menulis surat ini terasa seperti mencoba menangkap cahaya bulan dalam segelas air. Sulit, bahkan mungkin mustahil, untuk meringkas semua yang aku rasakan menjadi rangkaian kata. Tapi, aku akan mencoba.
+                <br><br>
+                Aku ingat hari pertama kita bertemu. Dunia seolah berhenti sejenak, dan yang ada hanyalah kamu. Aku ingat cara matamu berbinar saat bercerita tentang buku favoritmu, cara tawa mu terdengar seperti melodi yang paling aku suka. Sejak saat itu, aku tahu ada sesuatu yang istimewa tentangmu.
+                <br><br>
+                Bersamamu, aku belajar arti kesederhanaan. Kau mengajarkanku untuk menemukan kebahagiaan dalam hal-hal kecil: secangkir kopi di pagi hari, lagu-lagu lama yang kita putar berulang kali, atau sekadar diam berdua tanpa merasa canggung. Kau adalah tempat peristirahatanku di tengah hiruk pikuk dunia.
+                <br><br>
+                Ada ribuan alasan mengapa aku mencintaimu, tapi yang paling utama adalah karena bersamamu, aku menjadi versi terbaik dari diriku sendiri. Kau tidak mencoba mengubahku, tapi justru membuatku ingin tumbuh menjadi lebih baik—untukmu, dan untuk kita.
+                <br><br>
+                Terima kasih sudah hadir dalam hidupku. Terima kasih untuk semua tawa, pelukan, dan bahkan air mata yang kita bagi. Aku tidak tahu apa yang takdir simpan untuk kita di masa depan, tapi satu hal yang aku tahu pasti: aku ingin menempuhnya semua bersamamu.
+                <br><br>
+                Dengan seluruh cinta,
+                <br><br>
+                [Nama Kamu]
+            </p>
+        </div>
+
+        <div class="mt-12 w-full max-w-2xl">
+            <h2 class="font-heading text-2xl font-bold text-center mb-4">Balasanmu (Opsional)</h2>
+            <p class="text-center text-sm mb-6">Tulis apa saja yang ada di pikiranmu. Ini hanya akan tersimpan di browser ini, jadi jangan ragu untuk jujur.</p>
+            <form id="replyForm">
+                <textarea id="replyText" rows="10" class="w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent" placeholder="Dear [Nama Kamu],"></textarea>
+                <button type="submit" class="mt-4 w-full bg-accent text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition-opacity">
+                    Simpan Balasan
+                </button>
+            </form>
+            <p id="saveMessage" class="text-accent text-center mt-4 hidden">Balasanmu telah tersimpan.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordForm = document.getElementById('passwordForm');
+            const letterContent = document.getElementById('letterContent');
+            const otpForm = document.getElementById('otpForm');
+            const otpInput = document.getElementById('otpInput');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            const replyForm = document.getElementById('replyForm');
+            const replyText = document.getElementById('replyText');
+            const saveMessage = document.getElementById('saveMessage');
+
+            // GANTI '15012023' dengan tanggal anniversary Anda
+            const correctOTP = "15012023"; 
+
+            // Load saved reply from localStorage
+            const savedReply = localStorage.getItem('letterReply');
+            if (savedReply) {
+                replyText.value = savedReply;
+            }
+
+            otpForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (otpInput.value.trim() === correctOTP) {
+                    passwordForm.classList.add('hidden');
+                    setTimeout(() => {
+                        passwordForm.style.display = 'none';
+                        letterContent.style.display = 'block';
+                        setTimeout(() => {
+                            letterContent.classList.add('show');
+                        }, 20); // Timeout kecil untuk memastikan transisi berjalan
+                    }, 500);
+                } else {
+                    errorMessage.classList.remove('hidden');
+                    otpInput.value = '';
+                    setTimeout(() => {
+                        errorMessage.classList.add('hidden');
+                    }, 3000);
+                }
+            });
+
+            replyForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const reply = replyText.value;
+                localStorage.setItem('letterReply', reply);
+                saveMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    saveMessage.classList.add('hidden');
+                }, 3000);
+            });
+        });
+    </script>
+
+</body>
+</html>

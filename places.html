@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Places</title>
+    <!-- Sisipkan Tailwind, Fonts, dan Custom Style yang sama -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400&family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        /* ... (sama seperti di index.html) ... */
+        :root { --color-base: #F5F3F0; --color-text: #2C2C2C; --color-accent: #A67C52; }
+        body { background-color: var(--color-base); color: var(--color-text); font-family: 'Inter', sans-serif; }
+        .font-heading { font-family: 'Cormorant Garamond', serif; }
+        .font-cursive { font-family: 'Dancing Script', cursive; }
+        .text-accent { color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+        @media (prefers-color-scheme: dark) { :root { --color-base: #1A1A1A; --color-text: #E8E5E1; } }
+
+        /* Map Styles */
+        #map { height: 100vh; width: 100%; z-index: 1; }
+        .leaflet-popup-content-wrapper {
+            background-color: var(--color-base);
+            color: var(--color-text);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .leaflet-popup-content {
+            margin: 15px;
+            font-family: 'Inter', sans-serif;
+            max-width: 250px;
+        }
+        .leaflet-popup-tip {
+            background-color: var(--color-base);
+        }
+        .custom-popup img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .custom-popup h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .custom-popup p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .custom-popup .date {
+            font-style: italic;
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // 1. Inisialisasi Peta
+        const map = L.map('map', {
+            center: [-6.2088, 106.8456], // Koordinat tengah peta (contoh: Jakarta)
+            zoom: 12,
+            zoomControl: true
+        });
+
+        // 2. Custom Tile Layer (Monochrome Style)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        // 3. Data Lokasi (GANTI DENGAN DATA ANDA)
+        const places = [
+            {
+                coords: [-6.1751, 106.8650], // Contoh: Monas
+                title: "Tempat Pertama Kita Bertemu",
+                memory: "Aku masih ingat betul bagaimana jantungku berdegup kencang saat pertama kali melihatmu. Senyummu itu, yang bisa melenyapkan semua keraguan.",
+                date: "15 Januari 2023",
+                imgUrl: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=400&fit=crop&q=80" // Ganti URL foto
+            },
+            {
+                coords: [-6.1944, 106.8229], // Contoh: Bundaran HI
+                title: "Kencan Pertama",
+                memory: "Kita berjalan kaki tanpa tujuan, bercerita tentang apa saja. Malam itu terasa singkat, dan aku tidak ingin berhenti berbicara denganmu.",
+                date: "22 Januari 2023",
+                imgUrl: "https://images.unsplash.com/photo-1521133573892-e43209e81f89?w=400&h=400&fit=crop&q=80" // Ganti URL foto
+            },
+            // ... TAMBAHKAN 4-8 LOKASI LAINNYA ...
+        ];
+
+        // 4. Custom Icon
+        const customIcon = L.divIcon({
+            html: `<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 0C8.373 0 3 5.373 3 12c0 9 12 18 12 18s12-9 12-18c0-6.627-5.373-12-12-12zm0 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="var(--color-accent)"/>
+                   </svg>`,
+            className: 'custom-marker',
+            iconSize: [30, 42],
+            iconAnchor: [15, 42],
+            popupAnchor: [0, -42]
+        });
+
+        // 5. Tambahkan Marker ke Peta
+        places.forEach(place => {
+            const popupContent = `
+                <div class="custom-popup">
+                    <img src="${place.imgUrl}" alt="${place.title}">
+                    <h3>${place.title}</h3>
+                    <p>${place.memory}</p>
+                    <div class="date">${place.date}</div>
+                </div>
+            `;
+            L.marker(place.coords, { icon: customIcon })
+              .addTo(map)
+              .bindPopup(popupContent);
+        });
+    </script>
+
+</body>
+</html>

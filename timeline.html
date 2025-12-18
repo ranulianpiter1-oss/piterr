@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Timeline</title>
+    <!-- Sisipkan Tailwind, Fonts, dan Custom Style yang sama seperti di index.html -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Inter:wght@300;400&family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* ... (sama seperti di index.html) ... */
+        :root { --color-base: #F5F3F0; --color-text: #2C2C2C; --color-accent: #A67C52; }
+        body { background-color: var(--color-base); color: var(--color-text); font-family: 'Inter', sans-serif; }
+        .font-heading { font-family: 'Cormorant Garamond', serif; }
+        .font-cursive { font-family: 'Dancing Script', cursive; }
+        .text-accent { color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+        @media (prefers-color-scheme: dark) { :root { --color-base: #1A1A1A; --color-text: #E8E5E1; } }
+        
+        /* Timeline Specific Styles */
+        .timeline-line {
+            background: var(--color-text);
+            width: 2px;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .timeline-item.show {
+            opacity: 1;
+        }
+        .timeline-photo {
+            display: none;
+            position: absolute;
+            right: 105%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .timeline-item:hover .timeline-photo {
+            display: block;
+        }
+        /* Responsive untuk timeline */
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+            .timeline-item { padding-left: 50px; }
+            .timeline-photo { 
+                left: 25px; 
+                right: auto;
+                transform: translateY(-100%);
+                top: 0;
+            }
+            .timeline-item:hover .timeline-photo {
+                display: block;
+                top: -170px;
+            }
+        }
+    </style>
+</head>
+<body class="py-16 px-4">
+
+    <div class="container mx-auto max-w-4xl">
+        <h1 class="font-heading text-4xl md:text-5xl font-bold text-center mb-12">Perjalanan Kita</h1>
+        
+        <div class="relative">
+            <div class="timeline-line"></div>
+            
+            <!-- Timeline Item 1 -->
+            <div class="timeline-item mb-12 flex items-center w-full" data-aos="fade-up">
+                <!-- Ganti 'path/to/photo1.jpg' -->
+                <img src="https://images.unsplash.com/photo-1551886535-fbfd0a59c9a2?w=300&h=300&fit=crop&q=80" alt="Memory 1" class="timeline-photo">
+                <div class="bg-white p-6 rounded-lg shadow-md w-full md:w-5/12 ml-auto md:ml-0">
+                    <span class="text-accent font-light text-sm">Jan 2023</span>
+                    <h3 class="font-heading text-2xl font-bold mt-1 mb-2">The Cold Brew Incident</h3>
+                    <p class="text-sm">Saat kau tumpahkan kopi di buku catatanku, ternyata nomor teleponmu tercoreng di situ.</p>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2 (Alternate Side) -->
+            <div class="timeline-item mb-12 flex items-center w-full" data-aos="fade-up">
+                <!-- Ganti 'path/to/photo2.jpg' -->
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=300&fit=crop&q=80" alt="Memory 2" class="timeline-photo">
+                <div class="bg-white p-6 rounded-lg shadow-md w-full md:w-5/12 md:mr-auto">
+                    <span class="text-accent font-light text-sm">Mar 2023</span>
+                    <h3 class="font-heading text-2xl font-bold mt-1 mb-2">First Concert Together</h3>
+                    <p class="text-sm">Kita berdesakan di tengah keramaian, tapi yang aku rasakan hanya ketenangan di sampingmu.</p>
+                </div>
+            </div>
+            
+            <!-- Timeline Item 3 -->
+            <div class="timeline-item mb-12 flex items-center w-full" data-aos="fade-up">
+                <!-- Ganti 'path/to/photo3.jpg' -->
+                <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=300&fit=crop&q=80" alt="Memory 3" class="timeline-photo">
+                <div class="bg-white p-6 rounded-lg shadow-md w-full md:w-5/12 ml-auto md:ml-0">
+                    <span class="text-accent font-light text-sm">Jun 2023</span>
+                    <h3 class="font-heading text-2xl font-bold mt-1 mb-2">The Lost in Bookstore Adventure</h3>
+                    <p class="text-sm">Kita tersesat di antara rak-rak buku tua dan menemukan cerita-cerita baru tentang kita.</p>
+                </div>
+            </div>
+
+            <!-- ... TAMBAHKAN ITEM TIMELINE LAINNYA DI SINI ... -->
+            <!-- Contoh Item ke-4 -->
+            <div class="timeline-item mb-12 flex items-center w-full" data-aos="fade-up">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=300&fit=crop&q=80" alt="Memory 4" class="timeline-photo">
+                <div class="bg-white p-6 rounded-lg shadow-md w-full md:w-5/12 md:mr-auto">
+                    <span class="text-accent font-light text-sm">Agu 2023</span>
+                    <h3 class="font-heading text-2xl font-bold mt-1 mb-2">Late Night Phone Calls</h3>
+                    <p class="text-sm">Bicara tentang apa saja, dari hal paling bodoh hingga mimpi-mimpi terbesar kita.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        AOS.init({
+            duration: 800, // durasi animasi
+            once: true // animasi hanya terjadi sekali
+        });
+
+        // Fallback JS untuk hover foto jika AOS tidak bekerja
+        document.addEventListener('DOMContentLoaded', () => {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+
+</body>
+</html>
